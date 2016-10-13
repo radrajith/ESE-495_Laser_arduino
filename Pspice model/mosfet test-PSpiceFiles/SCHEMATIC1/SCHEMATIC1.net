@@ -1,0 +1,9 @@
+* source MOSFET TEST
+X_U1         N00071 N00183 N00071 IRL520 
+V_V2         N01623 0  
++PULSE 0 5 0 10ns 10n 20m 40m
+R_R2         0 N00071  338m TC=0,0 
+X_D1         N00071 0 D180NQ045 
+I_I1         0 N00071 DC 6Adc  
+R_R3         N01623 N00183  500k TC=0,0 
+C_C1         0 N00183  100p  TC=0,0 

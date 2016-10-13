@@ -1,0 +1,185 @@
+
+**** 10/11/16 10:18:52 ******* PSpice Lite (March 2016) ******* ID# 10813 ****
+
+ ** Profile: "SCHEMATIC1-test"  [ C:\Users\radra\Box Sync\Senior Fall 2016\ESE 495\Pspice model\mosfet test-pspicefiles\schematic1\te
+
+
+ ****     CIRCUIT DESCRIPTION
+
+
+******************************************************************************
+
+
+
+
+** Creating circuit file "test.cir" 
+** WARNING: THIS AUTOMATICALLY GENERATED FILE MAY BE OVERWRITTEN BY SUBSEQUENT SIMULATIONS
+
+*Libraries: 
+* Profile Libraries :
+* Local Libraries :
+* From [PSPICE NETLIST] section of C:\Users\radra\AppData\Roaming\SPB_Data\cdssetup\OrCAD_PSpice\17.2.0\PSpice.ini file:
+.lib "nomd.lib" 
+
+*Analysis directives: 
+.TRAN  0 100ms 0 
+.OPTIONS ADVCONV
+.PROBE64 V(alias(*)) I(alias(*)) W(alias(*)) D(alias(*)) NOISE(alias(*)) 
+.INC "..\SCHEMATIC1.net" 
+
+
+
+**** INCLUDING SCHEMATIC1.net ****
+* source MOSFET TEST
+X_U1         N00071 N00183 N00071 IRL520 
+V_V2         N01623 0  
++PULSE 0 5 0 10ns 10n 20m 40m
+R_R2         0 N00071  338m TC=0,0 
+X_D1         N00071 0 D180NQ045 
+I_I1         0 N00071 DC 6Adc  
+R_R3         N01623 N00183  500k TC=0,0 
+C_C1         0 N00183  100p  TC=0,0 
+
+**** RESUMING test.cir ****
+.END
+
+**** 10/11/16 10:18:52 ******* PSpice Lite (March 2016) ******* ID# 10813 ****
+
+ ** Profile: "SCHEMATIC1-test"  [ C:\Users\radra\Box Sync\Senior Fall 2016\ESE 495\Pspice model\mosfet test-pspicefiles\schematic1\te
+
+
+ ****     Diode MODEL PARAMETERS
+
+
+******************************************************************************
+
+
+
+
+               X_U1.MD         X_U1.MD1        X_U1.MD2        X_U1.MD3        
+          IS  208.956000E-12    0             100.000000E-12  100.000000E-12 
+           N    1.28823        50                .400021         .400021     
+          BV  100                                                            
+         IBV   25.000000E-06                                                 
+          RS     .024153                        3.000000E-06                 
+          TT  100.000000E-06                                                 
+         CJO  496.534000E-12  414.312000E-12                                 
+          VJ    1.17861          .500006                                     
+           M     .454839         .794199                                     
+          FC                   10.000000E-09                                 
+          EG    1                                                            
+         XTI    1                                                            
+
+
+               X_D1.DFWD       X_D1.DLEAK      
+          IS   10.051520E-06   67.396870E-12 
+           N     .901323       99.6519       
+         ISR  225.763900E-12                 
+          NR    1.9468                       
+         IKF   11.3397                       
+          BV   44.965         100.000000E+03 
+         IBV     .025866        1.000000E-03 
+          RS  667.066100E-06     .1          
+         CJO   16.624000E-09                 
+          VJ     .75                         
+           M     .48421                      
+          EG     .69             .69         
+         XTI    2               2            
+
+
+**** 10/11/16 10:18:52 ******* PSpice Lite (March 2016) ******* ID# 10813 ****
+
+ ** Profile: "SCHEMATIC1-test"  [ C:\Users\radra\Box Sync\Senior Fall 2016\ESE 495\Pspice model\mosfet test-pspicefiles\schematic1\te
+
+
+ ****     MOSFET MODEL PARAMETERS
+
+
+******************************************************************************
+
+
+
+
+               X_U1.MM         
+               NMOS            
+       LEVEL    1            
+           L  100.000000E-06 
+           W  100.000000E-06 
+         VTO    1.91813      
+          KP    4.43974      
+       GAMMA    0            
+         PHI     .6          
+      LAMBDA  817.263000E-06 
+          IS    0            
+          JS    0            
+          PB     .8          
+        PBSW     .8          
+          CJ    0            
+        CJSW    0            
+        CGSO    4.691190E-06 
+        CGDO   69.351200E-09 
+        CGBO    0            
+         TOX    0            
+          XJ    0            
+       UCRIT   10.000000E+03 
+      DIOMOD    1            
+         VFB    0            
+        LETA    0            
+        WETA    0            
+          U0    0            
+        TEMP    0            
+         VDD    5            
+       XPART    0            
+
+
+**** 10/11/16 10:18:52 ******* PSpice Lite (March 2016) ******* ID# 10813 ****
+
+ ** Profile: "SCHEMATIC1-test"  [ C:\Users\radra\Box Sync\Senior Fall 2016\ESE 495\Pspice model\mosfet test-pspicefiles\schematic1\te
+
+
+ ****     INITIAL TRANSIENT SOLUTION       TEMPERATURE =   27.000 DEG C
+
+
+******************************************************************************
+
+
+
+ NODE   VOLTAGE     NODE   VOLTAGE     NODE   VOLTAGE     NODE   VOLTAGE
+
+
+(N00071)     .3147 (N00183) 472.0E-09 (N01623)    0.0000 (X_U1.4)    0.0000     
+
+(X_U1.5)     .3147 (X_U1.6)     .3147 (X_U1.7) 472.0E-09 (X_U1.8)     .3147     
+
+(X_U1.9)     .3147 (X_U1.10)     .3147                   (X_U1.11)     .3147    
+
+
+
+
+    VOLTAGE SOURCE CURRENTS
+    NAME         CURRENT
+
+    V_V2         9.440E-13
+    X_U1.VFI2    3.147E-13
+    X_U1.VFI1    0.000E+00
+
+    TOTAL POWER DISSIPATION   0.00E+00  WATTS
+
+
+
+          JOB CONCLUDED
+
+**** 10/11/16 10:18:52 ******* PSpice Lite (March 2016) ******* ID# 10813 ****
+
+ ** Profile: "SCHEMATIC1-test"  [ C:\Users\radra\Box Sync\Senior Fall 2016\ESE 495\Pspice model\mosfet test-pspicefiles\schematic1\te
+
+
+ ****     JOB STATISTICS SUMMARY
+
+
+******************************************************************************
+
+
+
+  Total job time (using Solver 1)   =         .06
+
