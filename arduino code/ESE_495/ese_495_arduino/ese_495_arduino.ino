@@ -65,7 +65,7 @@ void loop()
     String st1 = String(period) +","+String(duty)+","+String(pulses);
     //toSend = char(str1);//+','+char(duty)+','+char(pulses);
     lcd.print(st1);
-    Serial.println(st1);
+    //Serial.println(st1);
     once = false;
   }
   out= " ";
@@ -84,7 +84,7 @@ void loop()
     String temp = "  " + objTemp + "  ";
     char arr[18];
     temp.toCharArray(arr,18);
-  //Serial.println(arr);
+  Serial.println(arr);
   
   lcd.print(arr);
   bluetooth.write(arr);
@@ -106,8 +106,8 @@ void pulseGen(){
   //Serial.println(onTime);
   for(int i = pulses; i>0; i--){
     digitalWrite(LED, HIGH);
-    Serial.print(onTime);
-    Serial.println(offTime);
+    //Serial.print(onTime);
+    //Serial.println(offTime);
     delay(onTime);
     digitalWrite(LED, LOW);
     delay(offTime);
