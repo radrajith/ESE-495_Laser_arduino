@@ -4,6 +4,7 @@
 #include <I2cMaster.h>
 #include <string.h>
 #include <rgb_lcd.h>
+#include <SqWaveGen.h>
 #define SDA 5
 #define SCL 4
 const int LED = 7;
@@ -14,6 +15,7 @@ int buttonState = 0;
 int period = 0;
 int duty = 0;
 int pulses = 0;
+int voltage = 3;          //temporarily setting at 3v, have to code in the android app. 
 char toSend = 'start up';
 int num=0; 
 String out;
@@ -21,41 +23,35 @@ bool once = false;
 SoftI2cMaster i2c(SDA, SCL);
 MLX90615 tempSensor(DEVICE_ADDR, &i2c);
 SoftwareSerial bluetooth(bluetoothTx, bluetoothRx);
-rgb_lcd lcd;
+SqWaveGen sqwavegen = SqWaveGen();
+//rgb_lcd lcd;
 bool run = true;
+
 void setup()
 {
+  sqwavegen.generate(0, false);
+  pinMode(A2, OUTPUT);              //for dac
+  pinMode(A3, OUTPUT);
+  digitalWrite(A2, LOW);//Set A2 as GND
+  digitalWrite(A3, HIGH);//Set A3 as Vcc //for dac
   pinMode(LED, OUTPUT);
   pinMode(button, INPUT);
-  lcd.begin(16, 2);
-  //lcd.setRGB(255,0,0);
-  //Setup usb serial connection to computer
-  Serial.begin(9600);
-  //Setup Bluetooth serial connection to android
-  //bluetooth.begin(9600);
-  //bluetooth.print("AT+NAME=ese495_bt\r\n");
-  //bluetooth.print("$$$");
-  //delay(100);
-  //bluetooth.println("U,9600,N");
-  bluetooth.begin(9600);
+//  lcd.begin(16, 2);
+  Serial.begin(9600);     //Setup usb serial connection to computer
+  bluetooth.begin(9600);  //Setup Bluetooth serial connection to android
 }
 
 void loop()
 {
-  
-  //Read from bluetooth and write to usb serial
-  while(bluetooth.available())
+  //sqwavegen.generate(0, false);
+  while(bluetooth.available())    //Read from bluetooth and write to usb serial
   {
     if(run){
-      //
       run = false;
-      lcd.clear();
+//      lcd.clear();
     }
-      //lcd.setCursor(0,0);
-      //toSend = (char)bluetooth.read();
       int test = bluetooth.read();
       once = true;
-      //toSend = (char)test;
       out += (char) test;
   }
   run = true;
@@ -63,9 +59,7 @@ void loop()
   if(once){
     periodFind((String) out);
     String st1 = String(period) +","+String(duty)+","+String(pulses);
-    //toSend = char(str1);//+','+char(duty)+','+char(pulses);
-    lcd.print(st1);
-    //Serial.println(st1);
+//    lcd.print(st1);
     once = false;
   }
   out= " ";
@@ -78,7 +72,7 @@ void loop()
     digitalWrite(LED, LOW);
   }
   {
-    lcd.setCursor(0,1);
+//    lcd.setCursor(0,1);
     String objTemp = (String)(tempSensor.getTemperature(MLX90615_OBJECT_TEMPERATURE));
     String ambTemp = (String)(tempSensor.getTemperature(MLX90615_AMBIENT_TEMPERATURE));
     String temp = "  " + objTemp + "  ";
@@ -86,9 +80,8 @@ void loop()
     temp.toCharArray(arr,18);
   Serial.println(arr);
   
-  lcd.print(arr);
+//  lcd.print(arr);
   bluetooth.write(arr);
-  //
   rgbColorSet(objTemp.toFloat());
 
 
@@ -103,15 +96,24 @@ void loop()
 void pulseGen(){
   int onTime = ((period*duty)/100);
   int offTime = period - onTime;
-  //Serial.println(onTime);
+  Serial.println(onTime);
   for(int i = pulses; i>0; i--){
     digitalWrite(LED, HIGH);
-    //Serial.print(onTime);
-    //Serial.println(offTime);
+    //pulsewavegen(3);
+    sqwavegen.generate(voltage, false);
     delay(onTime);
-    digitalWrite(LED, LOW);
+   digitalWrite(LED, LOW);
+   sqwavegen.generate(0, false);
     delay(offTime);
   }
+}
+
+void pulsewavegen(int voltage){
+   Wire.beginTransmission(0x62);
+    Wire.write(0x40);         //DAC write
+    Wire.write(voltage >> 4); //write 8 msb
+    Wire.write((voltage &  15) << 4); //write 4 lsb along with 0000 at the end
+    Wire.endTransmission();
 }
 
 void periodFind(String output){
@@ -146,7 +148,7 @@ void rgbColorSet(double temp){
     green = 255;
     red = (rgb - (2*5592405))/21845;
   }
-  lcd.setRGB(red, green, blue);
+  //lcd.setRGB(red, green, blue);
   return 0;
 }
 
