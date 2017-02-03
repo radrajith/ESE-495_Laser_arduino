@@ -136,13 +136,13 @@ void pulseGen(){
   }
 }
 
-void pulsewavegen(double voltage){
-   Wire.beginTransmission(0x62);
-    Wire.write(0x40);         //DAC write
-    Wire.write(voltage >> 4); //write 8 msb
-    Wire.write((voltage &  15) << 4); //write 4 lsb along with 0000 at the end
-    Wire.endTransmission();
-}
+//void pulsewavegen(double voltage){
+//   Wire.beginTransmission(0x62);
+//    Wire.write(0x40);         //DAC write
+//    Wire.write(voltage >> 4); //write 8 msb
+//    Wire.write((voltage &  15) << 4); //write 4 lsb along with 0000 at the end
+//    Wire.endTransmission();
+//}
 
 void periodFind(String output){
   int one = output.indexOf(',');
